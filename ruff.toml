@@ -39,6 +39,10 @@ ignore = [
 
 [lint.per-file-ignores]
 "__init__.py" = ["F401"]
+"api/endpoints/*.py" = ["B008"]
+"models/*.py" = ["F821"]
+"core/deps.py" = ["B008"]
+"core/user_manager.py" = ["B008"]
 
 [format]
 quote-style = "double"

@@ -1,11 +1,16 @@
-from passlib.context import CryptContext
+from fastapi_users.authentication import AuthenticationBackend, BearerTransport, JWTStrategy
 
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+from core.config import get_settings
 
-
-def verify_password(plain_password: str, hashed_password: str) -> bool:
-    return pwd_context.verify(plain_password, hashed_password)
+settings = get_settings()
 
 
-def get_password_hash(password: str) -> str:
-    return pwd_context.hash(password)
+def get_jwt_strategy() -> JWTStrategy:
+    return JWTStrategy(secret=settings.secret_key, lifetime_seconds=settings.jwt_lifetime_seconds)
+
+
+auth_backend = AuthenticationBackend(
+    name="jwt",
+    transport=BearerTransport(tokenUrl=f"{settings.api_v1_str}/auth/login"),
+    get_strategy=get_jwt_strategy,
+)

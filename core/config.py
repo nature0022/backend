@@ -15,6 +15,8 @@ class Settings(BaseSettings):
     debug: bool = Field(default=False, alias="DEBUG")
     api_v1_str: str = Field(default="/api/v1", alias="API_V1_STR")
     secret_key: str = Field(default="your-secret-key-here", alias="SECRET_KEY")
+    database_url: str = Field(default="postgresql+asyncpg://localhost/test_auth", alias="DATABASE_URL")
+    jwt_lifetime_seconds: int = Field(default=3600, alias="JWT_LIFETIME_SECONDS")
 
 
 @lru_cache
